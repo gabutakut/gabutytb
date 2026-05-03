@@ -8,10 +8,7 @@ url="https://github.com/gabutakut/gabutytb"
 license=('LGPL2.1')
 depends=(
   'python3'
-  'python3-gi'
-  'python3-gi-cairo'
-  'gir1.2-gtk-4.0'
-  'gir1.2-adw-1'
+  'libgtk-4-dev'
 )
 makedepends=(
   'meson'
