@@ -1,34 +1,43 @@
 name: Build & Upload to PPA
+
 on:
   release:
     types: [published]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install deps
         run: |
           sudo apt update
-          sudo apt install -y devscripts debhelper dh-make meson ninja-build \
-          python3 python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 libgtk-4-dev \
+          sudo apt install -y devscripts debhelper dh-make meson ninja-build valac \
+          python3 python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 \
           dput gnupg
+
       - name: Setup GPG
         run: |
           mkdir -p ~/.gnupg
           chmod 700 ~/.gnupg
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+
       - name: Import GPG key
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --yes --pinentry-mode loopback --import
+
       - name: Prepare source tarball
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           cd ..
           cp -r gabutytb gabutytb-${VERSION}
+          # nama harus sesuai dengan Package di debian/changelog
           tar -czf com.github.gabutakut.gabutytb_${VERSION}.orig.tar.gz gabutytb-${VERSION}
+
       - name: Build package
         env:
           DEBEMAIL: torik.habib@gmail.com
@@ -37,19 +46,22 @@ jobs:
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           cd ../gabutytb-${VERSION}
-          dch --newversion "${VERSION}-1~ppa1" \
-              --distribution noble \
-              --force-distribution \
-              -b \
-              "Release ${VERSION}"
           chmod 644 debian/changelog debian/control debian/copyright
-          chmod +x debian/rules
+
           dpkg-buildpackage -S -sa -d --no-sign
+
+          echo "${{ secrets.GPG_PASSPHRASE }}" | \
+            gpg --batch --yes --pinentry-mode loopback \
+            --passphrase-fd 0 \
+            -u ${{ secrets.GPG_KEY_ID }} \
+            --clearsign ../*.dsc
+
           echo "${{ secrets.GPG_PASSPHRASE }}" | \
             debsign -k${{ secrets.GPG_KEY_ID }} \
             --no-re-sign \
             -p"gpg --batch --yes --pinentry-mode loopback --passphrase ${{ secrets.GPG_PASSPHRASE }}" \
             ../*.changes
+
       - name: Upload to PPA
         run: |
           cd ..

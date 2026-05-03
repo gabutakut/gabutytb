@@ -1,6 +1,6 @@
 pkgbase = gabutytb
 	pkgdesc = Frontend of YT-DLP built with GTK4 for Gabut Download Manager
-	pkgver = 1.0.0
+	pkgver = 1.0.1
 	pkgrel = 1
 	url = https://github.com/gabutakut/gabutytb
 	arch = x86_64
@@ -11,7 +11,7 @@ pkgbase = gabutytb
 	makedepends = pkg-config
 	depends = python3
 	depends = gtk-4
-	source = gabutytb-1.0.0.tar.gz::https://github.com/gabutakut/gabutytb/archive/refs/tags/1.0.0.tar.gz
+	source = gabutytb-1.0.1.tar.gz::https://github.com/gabutakut/gabutytb/archive/refs/tags/1.0.1.tar.gz
 	sha256sums = SKIP
 
 pkgname = gabutytb
