@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Gabut Yotube Server
+Name[id]=Plugin Gabut Yotube Server
+GenericName=YouTube Info Server
+GenericName[id]=Server Info YouTube
+Comment=JSON-RPC server untuk mengambil info video YouTube via yt-dlp
+Comment[id]=JSON-RPC server untuk mengambil info video YouTube via yt-dlp
+Exec=com.github.gabutakut.gabutytb
+Icon=com.github.gabutakut.gabutytb
+Terminal=false
+Type=Application
+Categories=Network;AudioVideo;Video;
+Keywords=youtube;yt-dlp;rpc;video;download;
+StartupWMClass=Gabut Plugin Youtube Parse
+StartupNotify=true

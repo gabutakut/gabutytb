@@ -1,0 +1,11 @@
+#!/usr/bin/env @PYTHON@
+import os
+import sys
+
+# gabutytb.py diinstall ke sini oleh meson
+sys.path.insert(1, '@PKGDATADIR@')
+
+os.environ.setdefault('PYTHONDONTWRITEBYTECODE', '1')
+
+import main
+main.App().run(sys.argv)
