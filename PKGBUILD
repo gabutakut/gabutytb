@@ -1,6 +1,6 @@
 # Maintainer: Torikul Habib <torik.habib@gmail.com>
 pkgname=gabutytb
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Frontend of YT-DLP built with GTK4 for Gabut Download Manager"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://github.com/gabutakut/gabutytb"
 license=('LGPL2.1')
 depends=(
   'python3'
-  'libgtk-4-dev'
+  'gtk-4'
 )
 makedepends=(
   'meson'
