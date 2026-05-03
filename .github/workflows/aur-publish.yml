@@ -1,0 +1,47 @@
+name: Publish to AUR
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  aur-publish:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Debug version
+        run: |
+          echo "REF: $GITHUB_REF"
+          echo "NAME: $GITHUB_REF_NAME"
+
+      - name: Get version
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Get SHA256
+        id: sha256
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          URL="https://github.com/gabutakut/gabutytb/archive/refs/tags/${VERSION}.tar.gz"
+
+          echo "Downloading: $URL"
+
+          curl -fL "$URL" -o source.tar.gz
+          SHA=$(sha256sum source.tar.gz | cut -d' ' -f1)
+
+          echo "SHA256=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Publish to AUR
+        uses: KSXGitHub/github-actions-deploy-aur@master
+        with:
+          pkgname: gabutytb
+          pkgbuild: ./PKGBUILD
+          commit_username: ${{ secrets.AUR_USERNAME }}
+          commit_email: ${{ secrets.AUR_EMAIL }}
+          ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+          commit_message: "Update to ${{ steps.version.outputs.VERSION }}"
+          updpkgsums: true
