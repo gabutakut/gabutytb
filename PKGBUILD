@@ -13,7 +13,6 @@ depends=(
 makedepends=(
   'meson'
   'ninja'
-  'vala'
   'pkg-config'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/gabutakut/gabutytb/archive/refs/tags/${pkgver}.tar.gz")
