@@ -10,7 +10,7 @@ pkgbase = gabutytb
 	makedepends = vala
 	makedepends = pkg-config
 	depends = python3
-	depends = gtk-4
+	depends = gtk4
 	source = gabutytb-1.0.1.tar.gz::https://github.com/gabutakut/gabutytb/archive/refs/tags/1.0.1.tar.gz
 	sha256sums = SKIP
 
