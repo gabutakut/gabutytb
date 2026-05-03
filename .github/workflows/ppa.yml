@@ -28,8 +28,32 @@ jobs:
 
       - name: Import GPG key
         run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --yes --pinentry-mode loopback --import
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | \
+            gpg --batch --yes --pinentry-mode loopback --import
+          gpg --batch --yes --pinentry-mode loopback \
+            --command-fd 0 --expert --edit-key ${{ secrets.GPG_KEY_ID }} \
+            <<< "trust
+          5
+          y
+          quit"
 
+      - name: Setup SSH untuk Launchpad
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.LAUNCHPAD_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ppa.launchpad.net >> ~/.ssh/known_hosts
+
+      - name: Setup dput
+        run: |
+          cat > ~/.dput.cf << EOF
+          [ppa]
+          fqdn = ppa.launchpad.net
+          method = sftp
+          incoming = ~%(ppa)s/ubuntu
+          login = torik-habib
+          allow_unsigned_uploads = 0
+          EOF
       - name: Prepare source tarball
         run: |
           VERSION=${GITHUB_REF_NAME#v}
