@@ -1,7 +1,7 @@
 <h1 align="center">🇮🇩 GabutYTB for Gabut Download Manager 🇮🇩</h1>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/gabutakut/gabutytb/master/data/icons/apps/com.github.gabutakut.gabutdm.svg" width="120" alt="Gabut Download Manager Logo">
+    <img src="https://raw.githubusercontent.com/gabutakut/gabutytb/master/data/icons/apps/com.github.gabutakut.gabutytb.svg" width="120" alt="Gabut Download Manager Logo">
 </p>
 
 
