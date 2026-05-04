@@ -60,7 +60,7 @@ jobs:
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           cd ../gabutytb-${VERSION}
-          dch --newversion "${VERSION}-1~ppa1" \
+          dch --newversion "${VERSION}" \
               --distribution noble \
               --force-distribution \
               -b \
