@@ -3,6 +3,7 @@ project('gabutytb', version: '1.0', meson_version: '>= 0.62.0',)
 python = import('python')
 py = python.find_installation('python3', required: true)
 gnome  = import('gnome')
+i18n = import ('i18n')
 
 pkgdatadir = get_option('prefix') / get_option('datadir') / 'gabutytb'
 
@@ -33,7 +34,7 @@ install_data(
 )
 
 install_data(
-  'data/com.github.gabutakut.gabutytb.metainfo.xml',
+  'data/com.github.gabutakut.gabutytb.appdata.xml',
   install_dir: get_option('datadir') / 'metainfo',
 )
 
