@@ -40,9 +40,18 @@ jobs:
       - name: Setup SSH untuk Launchpad
         run: |
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "${{ secrets.LAUNCHPAD_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ppa.launchpad.net >> ~/.ssh/known_hosts
+          ssh-keyscan -H ppa.launchpad.net >> ~/.ssh/known_hosts 2>/dev/null || true
+          chmod 644 ~/.ssh/known_hosts
+          cat >> ~/.ssh/config << EOF
+          Host ppa.launchpad.net
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+            BatchMode yes
+            User torik-habib
+          EOF
 
       - name: Setup dput
         run: |
