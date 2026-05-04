@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: torikhabib <torik.habib@gmail.com>
 Build-Depends: meson (>= 0.43),
                debhelper (>= 9),
+               desktop-file-utils,
                python3,
                python3-gi,
                python3-gi-cairo,
