@@ -31,7 +31,7 @@ class App(Gtk.Application):
         entry.arg_description = None
         self.add_main_option_entries([entry])
 
-        self.connect("activate",             self._on_activate)
+        self.connect("activate", self._on_activate)
         self.connect("handle-local-options", self._on_handle_options)
 
     def _on_handle_options(self, app, options_dict):
