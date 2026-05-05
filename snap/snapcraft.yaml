@@ -1,42 +1,32 @@
-name: gabutdm
-version: "2.8.5"
+name: gabutytb
+version: "1.0.1"
 grade: stable
 base: core24
-summary: Simple and Faster Download Manager
-description: |
-    Gabut Download Manager application that can download all you need like Link URIs Metallink Magnetlink Torrents using Aria2c and,
-    an application that has a local server service interface. also file transfers from smartphones.
-    This application prioritizes convenience, full of features and an attractive appearance.
+summary: Gabut Plugin Youtube for Gabut Download Manager.
 
 confinement: strict
 parts:
-  gabutdm:
+  gabutytb:
     after: [desktop-gnome-platform]
     plugin: meson
     meson-parameters:
       - --prefix=/usr
-    source: https://github.com/gabutakut/gabutdm.git
+    source: https://github.com/gabutakut/gabutytb.git
     override-build: |
         snapcraftctl build
-        sed -i -E 's|^(Icon[^=]*)=.*|\1=/usr/share/icons/hicolor/scalable/apps/com.github.gabutakut.gabutdm.svg|' ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/com.github.gabutakut.gabutdm.desktop
+        sed -i -E 's|^(Icon[^=]*)=.*|\1=/usr/share/icons/hicolor/scalable/apps/com.github.gabutakut.gabutytb.svg|' ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/com.github.gabutakut.gabutytb.desktop
     build-packages:
         - libgirepository1.0-dev
-        - valac
+        - debhelper,
+        - desktop-file-utils
+        - python3
+        - python3-gi
+        - python3-gi-cairo
+        - gir1.2-gtk-4.0
+        - gir1.2-adw-1
         - gobject-introspection
         - gettext
-        - libsoup-3.0-dev
-        - libcanberra-dev
-        - libcairo2-dev
-        - libsqlite3-dev
-        - libqrencode-dev
-        - libgee-0.8-dev
-        - libjson-glib-dev
-        - libgdk-pixbuf2.0-dev
         - libgtk-4-dev
-        - libadwaita-1-dev
-        - libavformat-dev
-        - libavcodec-dev
-        - libaria2-0-dev
     stage-packages:
         - libx11-dev
         - libxau-dev
@@ -78,12 +68,6 @@ parts:
         - libxcb-shm0-dev
         - libxcb1-dev
         - libxkbcommon-dev
-        - libcanberra0
-        - libqrencode4
-        - libavformat-dev
-        - libavcodec-dev
-        - libaria2-0-dev
-        - libhandy-1-0
   desktop-gnome-platform:
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     source-subdir: gtk
@@ -96,9 +80,9 @@ parts:
       snapcraftctl build
       mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
 apps:
-  gabutdm:
-    command: usr/bin/com.github.gabutakut.gabutdm
-    desktop: usr/share/applications/com.github.gabutakut.gabutdm.desktop
+  gabutytb:
+    command: usr/bin/com.github.gabutakut.gabutytb
+    desktop: usr/share/applications/com.github.gabutakut.gabutytb.desktop
     extensions: [gnome]
     plugs:
       - desktop
@@ -110,12 +94,12 @@ apps:
       - network-manager
       - unity7
       - home
-    slots: [ dbus-gabutdm ]
+    slots: [ dbus-gabutytb ]
 slots:
-  dbus-gabutdm:
+  dbus-gabutytb:
     interface: dbus
     bus: session
-    name: com.github.gabutakut.gabutdm
+    name: com.github.gabutakut.gabutytb
 plugs:
   gnome-46-2404:
     default-provider: gnome-46-2404
